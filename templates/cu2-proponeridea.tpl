@@ -20,8 +20,7 @@
     </select>
   </p>
   <p>
-    <input class="btn btn-primary" type="submit" name="submit" value="Enviar">
-    <input class="btn btn-primary" type="reset" name="reset" value="Cancelar">
+    <input class="btn btn-primary" type="submit" name="submit" value="Proponer">
   </p>
 </form>
 </div>
