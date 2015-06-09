@@ -5,7 +5,7 @@ require('configs/include.php');
 class c_opciones extends super_controller {
 
     public function display() {
-
+      
         $this->engine->display('header.tpl');
         $this->engine->display('opciones_ingeniero.tpl');
         $this->engine->display('fondo_perro.tpl');

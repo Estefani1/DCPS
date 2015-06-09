@@ -7,15 +7,18 @@ class c_calificar_prediseno extends super_controller {
     public function calificar() {
 
         $prediseno = new prediseno($this->post);
-        if (is_empty($prediseno)) {
-            $this->engine->assign(alerta, "ms.alertify_error()");
+        $cod=$this->post->codigo;
+        if (is_empty($prediseno) or  $cod=="seleccione codigo") {
+            $this->engine->assign(alerta, "ms. alertify_calificar_prediseno_error1()");
         }
+        else{
         $prediseno->set('gerente', $this->session['id']);
 
         $this->orm->connect();
         $this->orm->update_data("calificar", $prediseno);
         $this->orm->close();
         $this->engine->assign(alerta, "ms.alertify_calificar_prediseno()");
+        }
     }
 
   

@@ -9,8 +9,8 @@ class c_Modificar_idea extends super_controller {
             $message1 = "Ingrese nueva descripcion por favor. ";
         }
         if (!is_empty($message1))
-            $this->engine->assign(alerta, "ms.alertify_error()");
-
+            $this->engine->assign(alerta, "ms.alertify_modificar_idea_error()");
+        else{
         $_SESSION['nombre'] = $this->post->ddl;
         //acà actualizo
         $ide = new idea($this->post);
@@ -21,6 +21,7 @@ class c_Modificar_idea extends super_controller {
         $this->orm->close();
         //acà finaliza la actualizacion 
         $this->engine->assign(alerta, "ms.alertify_modificar_idea()");
+        }
     }
 
     public function selectideas() {

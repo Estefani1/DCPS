@@ -7,15 +7,17 @@ class c_realizar_diseno extends super_controller {
     public function add() {
         if (is_empty($this->post->codigo)) {
             $message1 = "Por favor ingrese el codigo";
+            $this->engine->assign(alerta, "ms.alertify_reunion2()");
         }
-        if ($this->post->dispositivo == "Seleccione") {
+        elseif ($this->post->dispositivo == "Seleccione") {
             $message2 = "Por favor seleccione el dispositivo";
+            $this->engine->assign(alerta, "ms.alertify_realizar_diseno_error1()");
         }
-        if ($this->post->software == "Seleccione") {
+        elseif ($this->post->software == "Seleccione") {
             $message3 = "Por favor seleccione el software";
+            $this->engine->assign(alerta, "ms.alertify_realizar_diseno_error2()");
         }
-        if (!is_empty($message1) || !is_empty($message2) || !is_empty($message3))
-            $this->engine->assign(alerta, "ms.alertify_error()");
+        else{
 
         settype($disen, 'object');
         $disen->codigo = $this->post->codigo;
@@ -37,6 +39,7 @@ class c_realizar_diseno extends super_controller {
 
         $this->engine->assign(alerta, "ms.alertify_realizar_diseno()");
     }
+    }
 
     public function select_dispositivo_software() {
         $options['dispositivo']['lvl2'] = 'all';
@@ -52,11 +55,21 @@ class c_realizar_diseno extends super_controller {
 
     public function display() {
         $this->select_dispositivo_software();
+        if ($this->session['tipo2'] == "ingeniero de hardware"){
         $this->engine->display('header.tpl');
         $this->engine->display('opciones_ingeniero.tpl');
         $this->engine->display($this->temp_aux);
         $this->engine->display('cu7-realizar_diseno.tpl');
         $this->engine->display('footer.tpl');
+        }
+        elseif($this->session['tipo1'] == "disenador grafico")
+        {
+        $this->engine->display('header.tpl');
+        $this->engine->display('disenador.tpl');
+        $this->engine->display($this->temp_aux);
+        $this->engine->display('cu7-realizar_diseno.tpl');
+        $this->engine->display('footer.tpl');
+        }
         $this->orm->close();
     }
 

@@ -6,4 +6,6 @@
         <a href="cu3-realizar_calificacion.php"><div class="item">Realizar calificacion</div></a><br/><br/>
         <a href="cu4-Programar_reunion.php"><div class="item">Programar Reunion</div></a><br/><br/>
         <a href="cu11-calificarprediseno.php"><div class="item">Calificar Prediseno</div></a><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <a href="salir.php"><div class="item">Salir</div></a><br/>
     </div>

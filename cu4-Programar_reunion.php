@@ -8,19 +8,21 @@ class c_Programar_reunion extends super_controller {
    
         if (is_empty($this->post->fecha)) {
             $message1 = "Seleccione la fecha por favor. ";
+            $this->engine->assign(alerta, "ms.alertify_reunion1()");
             //   $this->engine->assign('ddl', $this->post->ddl);
         }
-        if (is_empty($this->post->codigo)) {
+        elseif (is_empty($this->post->codigo)) {
             $message2 = "Ingrese el codigo por favor.";
+            $this->engine->assign(alerta, "ms.alertify_reunion2()");
             // $this->engine->assign('fecha', $this->post->fecha);
         }
-        if (is_empty($this->post->ddl)) {
+        elseif (is_empty($this->post->ddl)) {
             $message3 = "Seleccione la idea por favor.";
+            $this->engine->assign(alerta, "ms.alertify_reunion3()");
             // $this->engine->assign('fecha', $this->post->fecha);
         }
-        if (!is_empty($message1) || !is_empty($message2) || !is_empty($message3))
-            $this->engine->assign(alerta, "ms.alertify_error()");
-
+        
+        else{
         $reun = new reunion($this->post);
         $idear = new idea();
         $idear->set('nombre', $this->post->ddl);
@@ -33,6 +35,7 @@ class c_Programar_reunion extends super_controller {
         $this->orm->update_data("reunion", $idear);
         $this->orm->close();
         $this->engine->assign(alerta, "ms.alertify_programar_reunion()");
+        }
     }
 
     public function selectideas() {

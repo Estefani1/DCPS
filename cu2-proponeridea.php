@@ -26,7 +26,7 @@ class c_proponeridea extends super_controller {
     
     public function verificar_completitud($idea) {
         if (is_empty($idea->get('nombre')) || is_empty($idea->get('descripcion')) || ($idea->get('necesidad') == "Seleccione necesidad")) {
-            $this->engine->assign(alerta2, "ms.alertify_error()");
+            $this->engine->assign(alerta2, "ms.alertify_error_proponer()");
         }
     }
     

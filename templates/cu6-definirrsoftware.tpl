@@ -47,7 +47,7 @@
                     
                 </div>
                 <br/>
-                    <input class="btn btn-primary" type="submit" value="Definir dispositivo" />
+                    <input class="btn btn-primary" type="submit" value="Definir software" />
                 
         <script>
             function myFunction() {

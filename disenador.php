@@ -5,9 +5,9 @@ require('configs/include.php');
 class c_opciones extends super_controller {
 
     public function display() {
-     
+
         $this->engine->display('header.tpl');
-        $this->engine->display('opciones_arquitecto.tpl');
+        $this->engine->display('disenador.tpl');
         $this->engine->display('fondo_perro.tpl');
         $this->engine->display('footer.tpl');
     }
@@ -16,7 +16,7 @@ class c_opciones extends super_controller {
 
     	if(!isset($this->session['id'])){
     		header('Location: cu1-login.php');
-    	}elseif($this->session['tipo2']!= "arquitecto de software"){
+    	}elseif($this->session['tipo1']!= "disenador grafico"){
     		header($this->session['header']);
     	}else{
     		

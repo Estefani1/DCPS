@@ -10,18 +10,21 @@ class c_evaluar_viabilidad extends super_controller {
         $viabilidad = new viabilidad($this->post);
         if (is_null($viabilidad->get('codigo'))) {
             $message1 = "Por favor ingrese el codigo";
+            $this->engine->assign(alerta, "ms.alertify_reunion2()");
         }
-        if (($viabilidad->get('prediseno') == "Prediseno")) {
+        elseif (($viabilidad->get('prediseno') == "Prediseno")) {
             $message2 = "Por favor seleccione el prediseno";
+            $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad_error1()");
         }
-        if (($viabilidad->get('resultado') == "Seleccione")) {
+        elseif (($viabilidad->get('resultado') == "Seleccione")) {
             $message3 = "Por favor seleccione el Resultado";
+            $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad_error2()");
         }
-        if (is_null($viabilidad->get('causa'))) {
+       else if (is_null($viabilidad->get('causa'))) {
             $message4 = "Por favor ingrese la causa";
+            $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad_error3()");
         }
-        if (!is_empty($message1) || !is_empty($message2) || !is_empty($message3) || !is_empty($message4))
-            $this->engine->assign(alerta, "ms.alertify_error()");
+        else{
 
         $viabilidad->set('analista', $this->session['id']);
         //---Obtengo la idea del prediseño que seleccone
@@ -55,6 +58,7 @@ class c_evaluar_viabilidad extends super_controller {
 
 
         $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad()");
+    }
     }
 
     public function selectprediseno() {
