@@ -7,10 +7,13 @@ class c_revisar_diseno extends super_controller {
     public function add() {
         if ($this->post->evaluacion == "Seleccione") {
             $message1 = "Por favor califique el diseño";
+            $this->engine->assign(alerta, "ms.alertify_revisar_diseno_error1()");
         }
-        if (!is_empty($message1))
-            $this->engine->assign(alerta, "ms.alertify_error()");
-
+        elseif($this->post->codigo == "Seleccione codigo") {
+            $message2= "Seleccione el codigo del prediseño";
+            $this->engine->assign(alerta, "ms.alertify_revisar_diseno_error2()");
+        }
+        else{        
         $diseno = new diseno($this->post);
         $codp = $this->post->codigo;
         $cali = $this->post->evaluacion;
@@ -25,6 +28,7 @@ class c_revisar_diseno extends super_controller {
         $this->orm->update_data("revision", $diseno);
         $this->orm->close();
         $this->engine->assign(alerta, "ms.alertify_revisar_diseno()");
+        }
     }
 
     public function display() {

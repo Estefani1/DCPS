@@ -6,6 +6,7 @@ class c_opciones_especialista extends super_controller {
 
     public function display() {
 
+
         $this->engine->display('header.tpl');
         $this->engine->display('opciones_especialista.tpl');
         $this->engine->display('fondo_perro.tpl');

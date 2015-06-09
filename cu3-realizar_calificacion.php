@@ -7,8 +7,12 @@ class c_realizar_calificacion extends super_controller {
         $calificacion = new calificacion();
         $calificacion->set('idea', $ide);
         $calificacion->set('valor', $cal);
-        $this->verificar_completitud($calificacion);
-        
+        if (is_empty($calificacion->get('valor'))){
+         $this->engine->assign(alerta, "ms.alertify_error_cal()");  
+        }
+        else if($ide=="Seleccione idea"){ $this->engine->assign(alerta, "ms.alertify_error_proponer()");}
+        else{
+                
         $code['idea']['nombre'] = $ide;
         $options['idea']['lvl2'] = "one";
         $this->orm->connect();
@@ -22,6 +26,7 @@ class c_realizar_calificacion extends super_controller {
         $this->orm->insert_data("normal", $calificacion);
         $this->orm->close();
         $this->engine->assign(alerta, "ms.alertify_calificacion()");
+        }
     }
     
     public function verificarreunion($idea) {

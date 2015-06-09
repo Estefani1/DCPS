@@ -9,21 +9,24 @@ class c_definirsoftware extends super_controller {
  
        if (is_null($software->get('codigo'))) {
             $message1 = "Por favor ingrese el codigo";
+            $this->engine->assign(alerta, "ms.alertify_reunion2()");
         }
-          if (($software->get('prediseno') == "Prediseno")) {
+        elseif (($software->get('prediseno') == "Prediseno")) {
             $message2 = "Por favor seleccione el prediseno";
+            $this->engine->assign(alerta, "ms.alertify_definir_dispositivo_error3()"); 
         }
 
-        if (($software->get('lenguaje') == "Lenguaje")) {
+        elseif (($software->get('lenguaje') == "Lenguaje")) {
             $message3 = "Por favor seleccione el lenguaje";
+            $this->engine->assign(alerta, "ms.alertify_definir_software_error()");
         }
-        if (!is_empty($message1) || !is_empty($message2) || !is_empty($message3) )
-            $this->engine->assign(alerta, "ms.alertify_error()");
+        else{
 
         $this->orm->connect();
         $this->orm->insert_data("normal", $software);
         $this->orm->close();
         $this->engine->assign(alerta, "ms.alertify_definir_software()");
+        }
     }
 
 

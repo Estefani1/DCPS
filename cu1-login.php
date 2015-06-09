@@ -23,6 +23,7 @@ class c_login extends super_controller {
             $_SESSION['miembro'] = 'NULL';
             $_SESSION['identi'] = $cliente[0]->get('identificacion');
             $_SESSION['id'] = $cliente[0]->get('identificacion');
+            $_SESSION['nombre'] = $cliente[0]->get('nombre');
             $_SESSION['tipo1'] = "cliente";
             $_SESSION['header'] = 'Location: cu2-proponeridea.php';
             $this->session = $_SESSION;
@@ -35,6 +36,8 @@ class c_login extends super_controller {
 
             $_SESSION['id'] = $empleado[0]->get('cedula');
             $_SESSION['tipo1'] = $empleado[0]->get('tipo1');
+            $_SESSION['nombre'] = $empleado[0]->get('nombre');
+            $_SESSION['cargo']=$empleado[0]->get('tipo2');
             if ($empleado[0]->get('tipo1') == 'miembro') {
                 $_SESSION['tipo2'] = $empleado[0]->get('tipo2');
                 if ($empleado[0]->get('tipo2') == 'especialista en desarrollo del producto') {
@@ -58,26 +61,31 @@ class c_login extends super_controller {
                 header('Location: disenador.php');
             }
             $this->session = $_SESSION;
+                        
         } else {
             if ($this->post->Usuario == "" || $this->post->Contrasena == "") {
                 $this->engine->assign(alerta, "ms.alertify()");
             } else {
-                $this->engine->assign(alerta, "ms.alertify()");
+                $this->engine->assign(alerta, "ms.alertify_login()");
             }
         }
     }
 
     public function display() {
-     
+        $this->engine->assign('title', 'Ingresar a SATRACK');
         $this->engine->display('cu1-login.tpl');
 
     }
 
     public function run() {
+        if(isset($this->session['id'])){
+	header($this->session['header']);
+}else{
         if (isset($this->get->option)) {
             $this->{$this->get->option}();
         }
         $this->display();
+    }
     }
 
 }

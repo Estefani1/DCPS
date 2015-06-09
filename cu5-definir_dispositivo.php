@@ -9,23 +9,27 @@ class c_definir_dispositivo extends super_controller {
         $dispositivo = new dispositivo($this->post);
         if (is_null($dispositivo->get('codigo'))) {
             $message1 = "Por favor ingrese el codigo";
+            $this->engine->assign(alerta, "ms.alertify_reunion2()");
         }
-        if (is_null($dispositivo->get('costo'))) {
+        elseif (is_null($dispositivo->get('costo'))) {
             $message2 = "Por favor ingrese el costo";
+            $this->engine->assign(alerta, "ms.alertify_definir_dispositivo_error1()");            
         }
-        if (is_null($dispositivo->get('funcion'))) {
+        elseif (is_null($dispositivo->get('funcion'))) {
             $message3 = "Por favor ingrese la funcion";
+            $this->engine->assign(alerta, "ms.alertify_definir_dispositivo_error2()"); 
         }
-        if (($dispositivo->get('prediseno') == "Prediseno")) {
+        elseif (($dispositivo->get('prediseno') == "Prediseno")) {
             $message4 = "Por favor seleccione el prediseno";
+            $this->engine->assign(alerta, "ms.alertify_definir_dispositivo_error3()"); 
         }
-        if (!is_empty($message1) || !is_empty($message2) || !is_empty($message3) || !is_empty($message4))
-            $this->engine->assign(alerta, "ms.alertify_error()");
-
+        
+        else{
         $this->orm->connect();
         $this->orm->insert_data("normal", $dispositivo);
         $this->orm->close();
         $this->engine->assign(alerta, "ms.alertify_definir_dispositivo()");
+        }
     }
 
     public function selectprediseno() {

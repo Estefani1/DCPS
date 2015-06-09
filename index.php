@@ -6,6 +6,7 @@ class c_index extends super_controller {
 	
 	public function display()
 	{
+                header('Location: cu1-login.php');
 		$contenido_main = 'empty.tpl';
 		
 		if($this->get->cod != 765){

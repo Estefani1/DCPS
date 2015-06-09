@@ -7,37 +7,21 @@ class c_calificar_prediseno extends super_controller {
     public function calificar() {
 
         $prediseno = new prediseno($this->post);
-        if (is_empty($prediseno) || !is_numeric($prediseno->get('codigo'))) {
-            $this->engine->assign(alerta, "ms.alertify_error()");
+        $cod=$this->post->codigo;
+        if (is_empty($prediseno) or  $cod=="seleccione codigo") {
+            $this->engine->assign(alerta, "ms. alertify_calificar_prediseno_error1()");
         }
+        else{
         $prediseno->set('gerente', $this->session['id']);
 
         $this->orm->connect();
         $this->orm->update_data("calificar", $prediseno);
         $this->orm->close();
         $this->engine->assign(alerta, "ms.alertify_calificar_prediseno()");
-    }
-
-    public function verificar_completitud($prediseno) {
-        if (is_empty($prediseno) || !is_numeric($prediseno->get('codigo'))) throw_exception("Falta seleccionar prediseño");
-    }
-    
-    public function SinPrediseñosCalificables($viabilidad) {
-        if (!isset($viabilidad)) {
-            $this->error = 1;
-            $this->msg_warning = "No hay prediseños para calificar";
-            $this->engine->assign('type_warning', $this->type_warning);
-            $this->engine->assign('msg_warning', $this->msg_warning);
-            $this->temp_aux = 'message.tpl';
-            header('Location: opciones_gerente.php');
         }
     }
-    
-    public function verificar_rol() {
-        if (!isset($this->session['id'])) header('Location: cu1-login.php');
-        else
-            if ($this->session['tipo2'] != "gerente de negocios") header('Location: opciones_gerente.php');
-    }
+
+  
 
     public function display() {
 
@@ -73,8 +57,17 @@ class c_calificar_prediseno extends super_controller {
 
     public function run() {
         try {
-            $this->verificar_rol();
-            if (isset($this->get->option)) $this->{$this->get->option}();
+            if (!isset($this->session['id'])) {
+                header('Location: cu1-login.php');
+            } else {
+                if ($this->session['tipo2'] == "gerente de negocios") {
+                    if (isset($this->get->option)) {
+                        $this->{$this->get->option}();
+                    }
+                } else {
+                    header('Location: opciones_gerente.php');
+                }
+            }
         } catch (Exception $e) {
             $this->error = 1;
             $this->msg_warning = $e->getMessage();

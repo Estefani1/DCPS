@@ -7,6 +7,8 @@
         <br/><a href="cu5-definir_dispositivo.php"><div class="item">Definir dispositivo</div></a><br/>
         <br/><a href="cu8-Revisar_diseno.php"><div class="item">Revisar diseño</div></a><br/>
         <br/><a href="cu9-Registrar_prediseno.php"><div class="item">Registrar prediseño</div></a><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <a href="salir.php"><div class="item">Salir</div></a><br/>
     </div>
 
 
