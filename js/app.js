@@ -137,7 +137,7 @@ managerScreen = {
     },
     
     alertify_calificar_prediseno_error1: function(){
-        alertify.log("Seleccione el prediseño.", "Error", 10000);      
+        alertify.log("Falta seleccionar prediseño.", "Error", 10000);      
     },
     
     alertify_calificar_prediseno: function(){
