@@ -70,7 +70,7 @@ class c_Registrar_prediseno extends super_controller {
     public function display() {
     
         $this->engine->display('header.tpl');
-        $this->engine->display('opciones_analista.tpl');
+        $this->engine->display($this->session['display']);
         $this->engine->display($this->temp_aux);
         $this->engine->display('cu9-Registrar_prediseno.tpl');
         $this->engine->display('footer.tpl');

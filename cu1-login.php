@@ -26,6 +26,7 @@ class c_login extends super_controller {
             $_SESSION['nombre'] = $cliente[0]->get('nombre');
             $_SESSION['tipo1'] = "cliente";
             $_SESSION['header'] = 'Location: opcionescliente.php';
+            $_SESSION['display'] = 'opcionescliente.tpl';
             $this->session = $_SESSION;
             header('Location: opcionescliente.php');
         } elseif (isset($empleado[0]) && $hasher->CheckPassword($this->post->Contrasena, $empleado[0]->get('contrasena'))) {
@@ -42,25 +43,25 @@ class c_login extends super_controller {
                 $_SESSION['tipo2'] = $empleado[0]->get('tipo2');
                 if ($empleado[0]->get('tipo2') == 'especialista en desarrollo del producto') {
                     $_SESSION['header'] = 'Location: opciones_especialista.php';
-                    header('Location: opciones_especialista.php');
+                    $_SESSION['display'] = 'opciones_especialista.tpl';
                 } elseif ($empleado[0]->get('tipo2') == 'analista de negocios') {
                     $_SESSION['header'] = 'Location: opciones_analista.php';
-                    header('Location: opciones_analista.php');
+                    $_SESSION['display'] = 'opciones_analista.tpl';
                 } elseif ($empleado[0]->get('tipo2') == 'gerente de negocios') {
                     $_SESSION['header'] = 'Location: opciones_gerente.php';
-                    header('Location: opciones_gerente.php');
+                    $_SESSION['display'] = 'opciones_gerente.tpl';
                 } elseif ($empleado[0]->get('tipo2') == 'ingeniero de hardware') {
                     $_SESSION['header'] = 'Location: opciones_ingeniero.php';
-                    header('Location: opciones_ingeniero.php');
+                    $_SESSION['display'] = 'opciones_ingeniero.tpl';
                 } elseif ($empleado[0]->get('tipo2') == 'arquitecto de software') {
                     $_SESSION['header'] = 'Location: opciones_arquitecto.php';
-                    header('Location: opciones_arquitecto.php');
+                    $_SESSION['display'] = 'opciones_arquitecto.tpl';
                 }
             } else {
                 $_SESSION['header'] = 'Location: disenador.php';
-                header('Location: disenador.php');
             }
             $this->session = $_SESSION;
+            header($this->session['header']);
                         
         } else {
             if ($this->post->Usuario == "" || $this->post->Contrasena == "") {

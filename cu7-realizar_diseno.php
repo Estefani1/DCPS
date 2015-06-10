@@ -34,7 +34,7 @@ class c_realizar_diseno extends super_controller {
             echo "Error: " . $_FILES['imagen']['error'] . "<br>";
         } else {
 
-            move_uploaded_file($_FILES['imagen']['tmp_name'], 'C:/wamp/www/ProyectoDCPS/images/' . $_FILES['imagen']['name']);
+            move_uploaded_file($_FILES['imagen']['tmp_name'], 'C:/wamp/www/DCPS/images/' . $_FILES['imagen']['name']);
         }
 
         $this->engine->assign(alerta, "ms.alertify_realizar_diseno()");
@@ -55,21 +55,11 @@ class c_realizar_diseno extends super_controller {
 
     public function display() {
         $this->select_dispositivo_software();
-        if ($this->session['tipo2'] == "ingeniero de hardware"){
         $this->engine->display('header.tpl');
-        $this->engine->display('opciones_ingeniero.tpl');
+        $this->engine->display($this->session['display']);
         $this->engine->display($this->temp_aux);
         $this->engine->display('cu7-realizar_diseno.tpl');
         $this->engine->display('footer.tpl');
-        }
-        elseif($this->session['tipo1'] == "disenador grafico")
-        {
-        $this->engine->display('header.tpl');
-        $this->engine->display('disenador.tpl');
-        $this->engine->display($this->temp_aux);
-        $this->engine->display('cu7-realizar_diseno.tpl');
-        $this->engine->display('footer.tpl');
-        }
         $this->orm->close();
     }
 

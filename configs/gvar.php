@@ -18,7 +18,7 @@ $gvar=array();
 //messages
 
 //links and names
-$gvar['l_global'] = "http://localhost/ProyectoDCPS/";
+$gvar['l_global'] = "http://localhost/DCPS/";
 $gvar['n_global'] = "Framework G";
 
 $gvar['n_login'] = "Login";

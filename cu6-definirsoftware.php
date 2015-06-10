@@ -43,7 +43,7 @@ class c_definirsoftware extends super_controller {
         $this->selectprediseno();
         $this->engine->assign('title', 'Definir Software');
         $this->engine->display('header.tpl');
-        $this->engine->display('opciones_arquitecto.tpl');
+        $this->engine->display($this->session['display']);
         $this->engine->display($this->temp_aux);
         $this->engine->display('cu6-definirrsoftware.tpl');
         $this->engine->display('footer.tpl');
