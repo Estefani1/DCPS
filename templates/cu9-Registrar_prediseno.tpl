@@ -9,6 +9,7 @@
             
                 Seleccione la idea asociada a este prediseño
                 <select class="form-control"  name="idea">
+                                <option>Seleccione idea</option>
                                 {section loop=$ideas name=i }
                                     <option>{$ideas[i]->get('nombre')}</option>                 
                                 {/section}

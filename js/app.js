@@ -113,11 +113,19 @@ managerScreen = {
     },
     
     alertify_registrar_prediseno: function(){
-        alertify.log("Completo", "Success", 10000);      
+        alertify.log("Prediseno registrado correctamente", "Success", 10000);      
     },
     
     alertify_registrar_prediseno_error: function(){
         alertify.log("No hay ideas calificadas", "Error", 10000);      
+    },
+    
+    alertify_registrar_prediseno_error1: function(){
+        alertify.log("Ingrese un codigo por favor.", "Error", 10000);      
+    },
+    
+    alertify_registrar_prediseno_error2: function(){
+        alertify.log("seleccione idea por favor", "Error", 10000);      
     },
     
     alertify_asignar_viabilidad_error1: function(){
