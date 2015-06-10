@@ -38,7 +38,7 @@ managerScreen = {
     },
     
     alertify_calificacion: function(){
-        alertify.log("Idea calificada correctamente", "Error", 10000);      
+        alertify.log("Idea calificada correctamente", "Success", 10000);      
     },
     alertify_reunion1: function(){
         alertify.log("Seleccione la fecha por favor.", "Error", 10000);      

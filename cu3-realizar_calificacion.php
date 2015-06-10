@@ -7,10 +7,9 @@ class c_realizar_calificacion extends super_controller {
         $calificacion = new calificacion();
         $calificacion->set('idea', $ide);
         $calificacion->set('valor', $cal);
-        if (is_empty($calificacion->get('valor'))){
-         $this->engine->assign(alerta, "ms.alertify_error_cal()");  
+        if (is_empty($calificacion->get('valor'))||$ide=="Seleccione idea"){
+            $this->verificar_completitud();
         }
-        else if($ide=="Seleccione idea"){ $this->engine->assign(alerta, "ms.alertify_error_proponer()");}
         else{
                 
         $code['idea']['nombre'] = $ide;
@@ -19,14 +18,18 @@ class c_realizar_calificacion extends super_controller {
         $this->orm->read_data(array("idea"), $options, $code);
         $ideas = $this->orm->get_objects("idea");
         if ($ideas[0]->get('miembro') == $this->session['id']) {
-            $this->engine->assign(alerta, "ms.alertify_error_calificacion()");
+            $this->verificarmiembro();
         } else {
             $calificacion->set('miembro', $this->session['id']);
+            $this->orm->insert_data("normal", $calificacion);
+            $this->orm->close();
+            $this->engine->assign(alerta, "ms.alertify_calificacion()");
         }
-        $this->orm->insert_data("normal", $calificacion);
-        $this->orm->close();
-        $this->engine->assign(alerta, "ms.alertify_calificacion()");
         }
+    }
+    
+    public function verificarmiembro() {
+        $this->engine->assign(alerta, "ms.alertify_error_calificacion()");
     }
     
     public function verificarreunion($idea) {
@@ -35,8 +38,8 @@ class c_realizar_calificacion extends super_controller {
         }
     }
     
-    public function verificar_completitud($calificacion) {
-        if (is_empty($calificacion->get('valor'))) $this->engine->assign(alerta, "ms.alertify_error()");
+    public function verificar_completitud() {
+        $this->engine->assign(alerta, "ms.alertify_error_proponer()");
         //elseif (is_empty($calificacion->get('idea'))) throw_exception("Seleccione una idea");
     }
     
