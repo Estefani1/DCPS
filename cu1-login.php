@@ -25,9 +25,9 @@ class c_login extends super_controller {
             $_SESSION['id'] = $cliente[0]->get('identificacion');
             $_SESSION['nombre'] = $cliente[0]->get('nombre');
             $_SESSION['tipo1'] = "cliente";
-            $_SESSION['header'] = 'Location: cu2-proponeridea.php';
+            $_SESSION['header'] = 'Location: opcionescliente.php';
             $this->session = $_SESSION;
-            header('Location: cu2-proponeridea.php');
+            header('Location: opcionescliente.php');
         } elseif (isset($empleado[0]) && $hasher->CheckPassword($this->post->Contrasena, $empleado[0]->get('contrasena'))) {
             
             $_SESSION['miembro'] = $empleado[0]->get('cedula');
