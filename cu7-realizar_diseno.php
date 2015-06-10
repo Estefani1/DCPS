@@ -34,7 +34,7 @@ class c_realizar_diseno extends super_controller {
             echo "Error: " . $_FILES['imagen']['error'] . "<br>";
         } else {
 
-            move_uploaded_file($_FILES['imagen']['tmp_name'], 'C:/wamp/www/DCPS/images/' . $_FILES['imagen']['name']);
+            move_uploaded_file($_FILES['imagen']['tmp_name'], $gvar.l__path . 'images/' . $_FILES['imagen']['name']);
         }
 
         $this->engine->assign(alerta, "ms.alertify_realizar_diseno()");

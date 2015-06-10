@@ -21,6 +21,8 @@ $gvar=array();
 $gvar['l_global'] = "http://localhost/DCPS/";
 $gvar['n_global'] = "Framework G";
 
+$gvar['l_path'] = "C:/wamp/www/DCPS/";
+
 $gvar['n_login'] = "Login";
 $gvar['n_logout'] = "Logout";
 
