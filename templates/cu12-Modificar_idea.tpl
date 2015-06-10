@@ -9,7 +9,7 @@
                                 <option > Seleccione idea</option>
                                 {section loop=$ide name=i }
 
-                                    <option value= {$ide[i]->get('nombre')}>  {$ide[i]->get('nombre')}</option>                 
+                                    <option value= {$ide[i]->get('nombre')}> {$ide[i]->get('nombre')}</option>                 
                                 {/section}
 
                             </select>

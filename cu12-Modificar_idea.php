@@ -14,7 +14,7 @@ class c_Modificar_idea extends super_controller {
         $ide = new idea($this->post);
         $ide->set('miembro',$this->session['id']);
         $ide->set('etapa',"Modificada");
-        print_r2($ide);
+        $ide->set('nombre',$this->post->ddl);
         $this->orm->connect();
         $this->orm->update_data("normal", $ide);
         $this->orm->close();
