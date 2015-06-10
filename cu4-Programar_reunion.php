@@ -57,7 +57,7 @@ class c_Programar_reunion extends super_controller {
     public function display() {
         // $this->selectreuniones();
         $this->engine->display('header.tpl');
-        $this->engine->display('opciones_gerente.tpl');
+        $this->engine->display($this->session['display']);
         $this->engine->display($this->temp_aux);
         $this->engine->display('cu4-Programar_reunion.tpl');
         $this->engine->display('footer.tpl');

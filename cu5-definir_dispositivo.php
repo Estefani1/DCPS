@@ -44,7 +44,7 @@ class c_definir_dispositivo extends super_controller {
     public function display() {
         $this->selectprediseno();
         $this->engine->display('header.tpl');
-        $this->engine->display('opciones_especialista.tpl');
+        $this->engine->display($this->session['display']);
         $this->engine->display($this->temp_aux);
         $this->engine->display('cu5-definir_dispositivo.tpl');
         $this->engine->display('footer.tpl');

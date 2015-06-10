@@ -10,11 +10,11 @@ class c_Modificar_idea extends super_controller {
             $this->verificar_completitud();
         }
         else{
-        $_SESSION['nombre'] = $this->post->ddl;
         //acà actualizo
         $ide = new idea($this->post);
         $ide->set('miembro',$this->session['id']);
         $ide->set('etapa',"Modificada");
+        print_r2($ide);
         $this->orm->connect();
         $this->orm->update_data("normal", $ide);
         $this->orm->close();
@@ -50,17 +50,7 @@ class c_Modificar_idea extends super_controller {
         $this->engine->assign('necesidad', $necesidad);
         
         $this->engine->display('header.tpl');
-        if($this->session['id'] == 1234){
-            $this->engine->display('opciones_especialista.tpl');
-        }else if($this->session['id'] == 2345){
-            $this->engine->display('opciones_analista.tpl');
-        }else if($this->session['id'] == 3456){
-            $this->engine->display('opciones_gerente.tpl');
-        }else if($this->session['id'] == 4567){
-            $this->engine->display('opciones_ingeniero.tpl');
-        }else if($this->session['id'] == 5678){
-            $this->engine->display('opciones_arquitecto.tpl');
-        }
+        $this->engine->display($this->session['display']);
         $this->engine->display($this->temp_aux);
         $this->engine->display('cu12-Modificar_idea.tpl');
         $this->engine->display('footer.tpl');

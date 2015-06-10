@@ -215,14 +215,13 @@ class db {
             case "idea":
                 switch ($options['lvl2']) {
                     case "normal":
-                        $nombre=$_SESSION['nombre'];
                         $this->escape_string($object);
                         $nombre=$object->get('nombre');
                         $descripcion = $object->get('descripcion');
                         $miembro = $object->get('miembro');
                         $etapa = $object->get('etapa');
                         $necesidad = $object->get('necesidad');
-                        $this->do_operation("UPDATE idea SET descripcion = '$descripcion', etapa = '$etapa',necesidad = '$necesidad', miembro='$miembro' WHERE nombre = '$nombre';");
+                        $this->do_operation("UPDATE idea SET descripcion = '$descripcion', etapa = '$etapa', necesidad = '$necesidad', miembro='$miembro' WHERE nombre = '$nombre';");
                         break;
                     case "reunion":
                         $this->escape_string($object);
@@ -336,6 +335,9 @@ class db {
                         break;
                     case "modificables":
                         $info = $this->get_data("SELECT i.* FROM idea i WHERE i.etapa = 'Modificable';");
+                        break;
+                    case "Aceptadas":
+                        $info=$this->get_data("SELECT i.* FROM idea i WHERE i.etapa = 'Aceptada';");
                         break;
                 }
                 break;

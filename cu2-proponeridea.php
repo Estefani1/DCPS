@@ -62,18 +62,7 @@ class c_proponeridea extends super_controller {
         $this->CargarNecesidad();
         $this->engine->assign('title', 'proponer idea');
         $this->engine->display('header.tpl');
-        if($this->session['id'] == 1234){
-            $this->engine->display('opciones_especialista.tpl');
-        }else if($this->session['id'] == 2345){
-            $this->engine->display('opciones_analista.tpl');
-        }else if($this->session['id'] == 3456){
-            $this->engine->display('opciones_gerente.tpl');
-        }else if($this->session['id'] == 4567){
-            $this->engine->display('opciones_ingeniero.tpl');
-        }else if($this->session['id'] == 5678){
-            $this->engine->display('opciones_arquitecto.tpl');
-        }
-        //$this->engine->display($this->temp_aux);
+        $this->engine->display($this->session['display']);
         $this->engine->display('cu2-proponeridea.tpl');
         $this->engine->display('footer.tpl');
     }
