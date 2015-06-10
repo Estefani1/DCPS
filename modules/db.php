@@ -217,6 +217,7 @@ class db {
                     case "normal":
                         $nombre=$_SESSION['nombre'];
                         $this->escape_string($object);
+                        $nombre=$object->get('nombre');
                         $descripcion = $object->get('descripcion');
                         $miembro = $object->get('miembro');
                         $etapa = $object->get('etapa');

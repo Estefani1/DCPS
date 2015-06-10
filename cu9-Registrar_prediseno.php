@@ -24,6 +24,7 @@ class c_Registrar_prediseno extends super_controller {
             $this->engine->assign(alerta, "ms.alertify_error()");
 
         $pred = new prediseno($this->post);
+        $pred->set('especialista',$this->session['id']);
         $this->orm->connect();
         $this->orm->insert_data("insert", $pred);
         $this->orm->close();
@@ -48,19 +49,20 @@ class c_Registrar_prediseno extends super_controller {
         $califica = $this->orm->get_objects("calificacion");
         if(is_empty($califica)){
             $this->engine->assign(alerta, "ms.alertify_registrar_prediseno_error()");
-        }
-        foreach ($califica as $key => $cal) {
-            if($cal->get('valor') < 3){
-                $etapa = 'No aceptada';
-            }else{
-                $etapa = 'Aceptada';
+        }else{
+            foreach ($califica as $key => $cal) {
+                if($cal->get('valor') < 3){
+                    $etapa = 'No aceptada';
+                }else{
+                    $etapa = 'Aceptada';
+                }
+                $code['idea']['nombre'] = $cal->get('idea');
+                $options['idea']['lvl2']= "one";
+                $this->orm->read_data(array("idea"), $options, $code);
+                $ii = $this->orm->get_objects("idea");
+                $ii[0]->set('etapa', $etapa);
+                $this->orm->update_data("normal",$ii[0]);
             }
-            $code['idea']['nombre'] = $cal->get('idea');
-            $options['idea']['lvl2']= "one";
-            $this->orm->read_data(array("idea"), $options, $code);
-            $ii = $this->orm->get_objects("idea");
-            $ii[0]->set('etapa', $etapa);
-            $this->orm->update_data("normal",$ii[0]);
         }
         $this->orm->close();
     }
@@ -75,16 +77,20 @@ class c_Registrar_prediseno extends super_controller {
     }
 
     public function run() {
-        try {
-            if (isset($this->get->option)) {
-                $this->{$this->get->option}();
+        try {if(!isset($this->session['id'])){header('Location: cu1-login.php');}
+            elseif($this->session['tipo2']=="especialista en desarrollo del producto"){
+                if (isset($this->get->option)) {
+                    $this->{$this->get->option}();
+                }
+                $this->actualizar_ideas();
+                $options['idea']['lvl2'] = "Aceptadas";
+                $this->orm->connect();
+                $this->orm->read_data(array("idea"), $options, $cod);
+                $ideas = $this->orm->get_objects("idea");
+                $this->engine->assign('ideas',$ideas);
+            }else{
+                header($this->session['header']);
             }
-            $this->actualizar_ideas();
-            $options['idea']['lvl2'] = "Aceptadas";
-            $this->orm->connect();
-            $this->orm->read_data(array("idea"), $options, $cod);
-            $ideas = $this->orm->get_objects("idea");
-            $this->engine->assign('ideas',$ideas);
         } catch (Exception $e) {
             $this->error = 1;
             $this->msg_warning = $e->getMessage();
