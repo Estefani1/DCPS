@@ -10,11 +10,11 @@ class c_Modificar_idea extends super_controller {
             $this->verificar_completitud();
         }
         else{
-        $_SESSION['nombre'] = $this->post->ddl;
         //acà actualizo
         $ide = new idea($this->post);
         $ide->set('miembro',$this->session['id']);
         $ide->set('etapa',"Modificada");
+        print_r2($ide);
         $this->orm->connect();
         $this->orm->update_data("normal", $ide);
         $this->orm->close();
