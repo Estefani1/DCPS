@@ -25,10 +25,16 @@
                             <a >Nueva descripcion:</a> </br>
 
                             <textarea class="form-control" id="textAread_id" name = "descripcion" rows = "8" cols = "40" class = "input" WRAP ></textarea> </br>
-                            <!-- <input type="button" onclick="val()" value="Modificar">   -->
-                            <input class="btn btn-primary" type="submit" value="Modificar" />
-
-
+                            <p>
+                                <label for="select">Necesidad:</label>
+                                <select  class="form-control" name="necesidad">
+                                <option > Seleccione necesidad</option>
+                                {section loop=$necesidad name=i}
+                                <option value="{$necesidad[i]->get('codigo')}">{$necesidad[i]->get('nombre')}</option>
+                                {/section}
+                                </select>
+                              </p>
+                              <input class="btn btn-primary" type="submit" value="Modificar" />
                         </div>
  
 

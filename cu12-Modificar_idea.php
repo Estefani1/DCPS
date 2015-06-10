@@ -5,11 +5,10 @@ require('configs/include.php');
 class c_Modificar_idea extends super_controller {
 
     public function Modificaridea() {
-        if ($this->post->descripcion == NULL) {
-            $message1 = "Ingrese nueva descripcion por favor. ";
+        if ($this->post->descripcion == NULL || $this->post->necesidad == "Seleccione necesidad"||
+                $this->post->ddl =="Seleccione idea") {
+            $this->verificar_completitud();
         }
-        if (!is_empty($message1))
-            $this->engine->assign(alerta, "ms.alertify_modificar_idea_error()");
         else{
         $_SESSION['nombre'] = $this->post->ddl;
         //acà actualizo
@@ -23,8 +22,18 @@ class c_Modificar_idea extends super_controller {
         $this->engine->assign(alerta, "ms.alertify_modificar_idea()");
         }
     }
+    
+    public function verificar_completitud() {
+        $this->engine->assign(alerta, "ms.alertify_error()");
+    }
+    
+    public function verificar_rol() {
+        if (!isset($this->session['id'])) header('Location: cu1-login.php');
+        else
+            if ($this->session['tipo1'] != "miembro") header('Location: disenador.php');
+    }
 
-    public function selectideas() {
+    public function display() {
 
         $options['idea']['lvl2'] = 'modificables';
         $this->orm->connect();
@@ -32,17 +41,21 @@ class c_Modificar_idea extends super_controller {
         $idea = $this->orm->get_objects("idea");
         $this->orm->close();
         $this->engine->assign('ide', $idea);
-        //echo $idea[1]->get('nombre');
-    }
-
-    public function display() {
-
-        $this->selectideas();
+        
+        $options['necesidad']['lvl2'] = "all";
+        $this->orm->connect();
+        $this->orm->read_data(array("necesidad"), $options);
+        $necesidad = $this->orm->get_objects("necesidad");
+        $this->orm->close();
+        $this->engine->assign('necesidad', $necesidad);
+        
         $this->engine->display('header.tpl');
         if($this->session['id'] == 1234){
             $this->engine->display('opciones_especialista.tpl');
         }else if($this->session['id'] == 2345){
             $this->engine->display('opciones_analista.tpl');
+        }else if($this->session['id'] == 3456){
+            $this->engine->display('opciones_gerente.tpl');
         }else if($this->session['id'] == 4567){
             $this->engine->display('opciones_ingeniero.tpl');
         }else if($this->session['id'] == 5678){
@@ -55,15 +68,8 @@ class c_Modificar_idea extends super_controller {
 
     public function run() {
         try {
-            if(!isset($this->session['id'])){
-                header('Location: cu1-login.php');
-            }else{
-                if($this->session['tipo1']=="miembro"){
-                    if (isset($this->get->option)){$this->{$this->get->option}();}
-                }else{
-                    header($this->session['header']);
-                }
-            }
+            $this->verificar_rol();
+            if (isset($this->get->option)) $this->{$this->get->option}();
         } catch (Exception $e) {
             $this->error = 1;
             $this->msg_warning = $e->getMessage();

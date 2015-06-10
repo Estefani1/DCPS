@@ -215,11 +215,13 @@ class db {
             case "idea":
                 switch ($options['lvl2']) {
                     case "normal":
+                        $nombre=$_SESSION['nombre'];
                         $this->escape_string($object);
                         $descripcion = $object->get('descripcion');
                         $miembro = $object->get('miembro');
                         $etapa = $object->get('etapa');
-                        $this->do_operation("UPDATE idea SET descripcion = '$descripcion', etapa = '$etapa', miembro='$miembro' WHERE nombre = '$nombre';");
+                        $necesidad = $object->get('necesidad');
+                        $this->do_operation("UPDATE idea SET descripcion = '$descripcion', etapa = '$etapa',necesidad = '$necesidad', miembro='$miembro' WHERE nombre = '$nombre';");
                         break;
                     case "reunion":
                         $this->escape_string($object);
