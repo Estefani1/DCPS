@@ -11,7 +11,7 @@
                 <input class="form-control" name="fecha" type="date">
                 <br/>
                 Seleccionar idea:
-                <select class="form-control" name="ddl">
+                <select class="form-control" name="idea">
                         <option value="">Seleccione idea</option>
                         {section loop=$ide name=i}
                             <option value= '{$ide[i]->get('nombre')}'> {$ide[i]->get('nombre')}</option>

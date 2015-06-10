@@ -6,29 +6,14 @@ class c_Programar_reunion extends super_controller {
 
     public function agregar_reunion() {
    
-        if (is_empty($this->post->fecha)) {
-            $message1 = "Seleccione la fecha por favor. ";
-            $this->engine->assign(alerta, "ms.alertify_reunion1()");
-            //   $this->engine->assign('ddl', $this->post->ddl);
+        if (is_empty($this->post->fecha)||is_empty($this->post->codigo)||is_empty($this->post->idea)) {
+            $this->verificar_completitud();
         }
-        elseif (is_empty($this->post->codigo)) {
-            $message2 = "Ingrese el codigo por favor.";
-            $this->engine->assign(alerta, "ms.alertify_reunion2()");
-            // $this->engine->assign('fecha', $this->post->fecha);
-        }
-        elseif (is_empty($this->post->ddl)) {
-            $message3 = "Seleccione la idea por favor.";
-            $this->engine->assign(alerta, "ms.alertify_reunion3()");
-            // $this->engine->assign('fecha', $this->post->fecha);
-        }
-        
         else{
         $reun = new reunion($this->post);
         $idear = new idea();
-        $idear->set('nombre', $this->post->ddl);
+        $idear->set('nombre', $this->post->idea);
         $idear->set('reunion', $this->post->codigo);
-
-
 
         $this->orm->connect();
         $this->orm->insert_data("normal", $reun);
@@ -37,7 +22,17 @@ class c_Programar_reunion extends super_controller {
         $this->engine->assign(alerta, "ms.alertify_programar_reunion()");
         }
     }
-
+    
+    public function verificar_completitud() {
+        $this->engine->assign(alerta, "ms.alertify_error()");
+    }
+    
+    public function verificar_rol() {
+        if (!isset($this->session['id'])) header('Location: cu1-login.php');
+        else
+            if ($this->session['tipo2'] != "gerente de negocios") header($this->session['header']);
+    }
+    
     public function selectideas() {
 
         $options['idea']['lvl2'] = 'Por revisar';
@@ -70,18 +65,8 @@ class c_Programar_reunion extends super_controller {
 
     public function run() {
         try {
-            if(!isset($this->session['id'])){header('Location: cu1-login.php');}
-            elseif($this->session['tipo2']=="gerente de negocios"){
-                if (isset($this->get->option)) {
-                    //if ($this->get->option == "conversion")
-                    $this->{$this->get->option}();
-                    //else {
-                    //throw_exception("OpciÃ³n ". $this->get->option." no disponible");
-                    //}
-                }
-            }else{
-                header($this->session['header']);
-            }
+            $this->verificar_rol();
+            if (isset($this->get->option)) $this->{$this->get->option}();
         } catch (Exception $e) {
             $this->error = 1;
             $this->msg_warning = $e->getMessage();
