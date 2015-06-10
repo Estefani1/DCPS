@@ -87,7 +87,6 @@ class c_Registrar_prediseno extends super_controller {
                 $this->orm->connect();
                 $this->orm->read_data(array("idea"), $options, $cod);
                 $ideas = $this->orm->get_objects("idea");
-                print_r2($ideas);
                 $this->engine->assign('ideas',$ideas);
                 $this->orm->close();
             }else{
