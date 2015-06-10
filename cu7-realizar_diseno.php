@@ -56,7 +56,8 @@ class c_realizar_diseno extends super_controller {
     public function display() {
         $this->select_dispositivo_software();
         $this->engine->display('header.tpl');
-        $this->engine->display($this->session['display']);
+        if($this->session['tipo1'] == "disenador grafico")$this->engine->display('disenador.tpl');
+        else $this->engine->display('opciones_ingeniero.tpl');
         $this->engine->display($this->temp_aux);
         $this->engine->display('cu7-realizar_diseno.tpl');
         $this->engine->display('footer.tpl');
