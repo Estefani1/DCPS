@@ -8,7 +8,7 @@ class c_opcionescliente extends super_controller {
 
         $this->engine->display('header.tpl');
         $this->engine->display('opcionescliente.tpl');
-        $this->engine->display('cu2-proponeridea.tpl');
+        $this->engine->display('fondo_perro.tpl');
         $this->engine->display('footer.tpl');
     }
 
