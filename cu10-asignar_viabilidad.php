@@ -2,27 +2,16 @@
 
 require('configs/include.php');
 
-class c_evaluar_viabilidad extends super_controller {
-
-    //protected $pr;
+class c_asignar_viabilidad extends super_controller {
+    
+    var $sinviabilidad;
+    
     public function add() {
 
         $viabilidad = new viabilidad($this->post);
-        if (is_null($viabilidad->get('codigo'))) {
-            $message1 = "Por favor ingrese el codigo";
-            $this->engine->assign(alerta, "ms.alertify_reunion2()");
-        }
-        elseif (($viabilidad->get('prediseno') == "Prediseno")) {
-            $message2 = "Por favor seleccione el prediseno";
-            $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad_error1()");
-        }
-        elseif (($viabilidad->get('resultado') == "Seleccione")) {
-            $message3 = "Por favor seleccione el Resultado";
-            $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad_error2()");
-        }
-       else if (is_null($viabilidad->get('causa'))) {
-            $message4 = "Por favor ingrese la causa";
-            $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad_error3()");
+        if (is_empty($viabilidad->get('codigo')) || is_empty($viabilidad->get('prediseno')) || 
+                is_empty($viabilidad->get('resultado')) || is_empty($viabilidad->get('causa'))) {
+            $this->verificar_completitud();
         }
         else{
 
@@ -60,39 +49,46 @@ class c_evaluar_viabilidad extends super_controller {
         $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad()");
     }
     }
+    
+    public function verificar_completitud() {
+        $this->engine->assign(alerta, "ms.alertify_error()");
+    }
 
-    public function selectprediseno() {
+    public function VerificarViabilidad($predis) {
+        if (is_empty($predis)) {
+            $this->sinviabilidad = 'opciones_analista.tpl';
+            $this->engine->assign(alerta, "ms.alertify_asignar_viabilidad_error1()");
+        }
+    }
+    
+    public function verificar_rol() {
+        if (!isset($this->session['id'])) header('Location: cu1-login.php');
+        else
+            if ($this->session['tipo2'] != "analista de negocios") header('Location: opciones_analista.php');
+    }
+
+    public function display() {
         $options['prediseno']['lvl2'] = 'sinviabilidad';
         $this->orm->connect();
         $this->orm->read_data(array("prediseno"), $options);
         $predis = $this->orm->get_objects("prediseno");
         $this->orm->close();
         $this->engine->assign('predis', $predis);
-    }
-
-    public function display() {
-        $this->selectprediseno();
-        $this->engine->assign('title', 'Evaluar viabilidad');
+        $this->VerificarViabilidad($predis);
+        
+        $this->engine->assign('title', 'Asiganar viabilidad');
         $this->engine->display('header.tpl');
         $this->engine->display('opciones_analista.tpl');
         $this->engine->display($this->temp_aux);
-        $this->engine->display('cu10-asignar_viabilidad.tpl');
+        if (!isset($this->sinviabilidad)) $this->engine->display('cu10-asignar_viabilidad.tpl');
+        else $this->engine->display('fondo_perro.tpl');
         $this->engine->display('footer.tpl');
     }
 
     public function run() {
         try {
-            if (!isset($this->session['id'])) {
-                header('Location: cu1-login.php');
-            } else {
-                if ($this->session['tipo2'] == "analista de negocios") {
-                    if (isset($this->get->option)) {
-                        $this->{$this->get->option}();
-                    }
-                } else {
-                    header('Location: opciones_analista.php');
-                }
-            }
+            $this->verificar_rol();
+            if (isset($this->get->option)) $this->{$this->get->option}();
         } catch (Exception $e) {
             $this->error = 1;
             $this->msg_warning = $e->getMessage();
@@ -105,6 +101,6 @@ class c_evaluar_viabilidad extends super_controller {
 
 }
 
-$ob = new c_evaluar_viabilidad();
+$ob = new c_asignar_viabilidad();
 $ob->run();
 ?>

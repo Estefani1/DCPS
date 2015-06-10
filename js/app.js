@@ -15,7 +15,7 @@ managerScreen = {
     },
     
     alertify_error: function(){
-        alertify.log("Faltan datos", "Error", 10000);
+        alertify.log("Faltan datos por ingresar", "Error", 10000);
     },
     
     alertify_error_proponer: function(){
@@ -121,7 +121,7 @@ managerScreen = {
     },
     
     alertify_asignar_viabilidad_error1: function(){
-        alertify.log("Por favor seleccione el prediseno", "Error", 10000);      
+        alertify.log("Todos los predisenos tienen viabilidad", "Error", 10000);      
     },
     
     alertify_asignar_viabilidad_error2: function(){
